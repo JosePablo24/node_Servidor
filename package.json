@@ -1,0 +1,27 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "Servidor Tcp/Ip",
+  "main": "servidor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jose Pablo Sandoval de la Cruz",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "hex-string": "^1.0.2",
+    "hex64": "^0.4.0",
+    "http": "0.0.0",
+    "net": "^1.0.2",
+    "socket.io": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosePablo24/node_Servidor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JosePablo24/node_Servidor/issues"
+  },
+  "homepage": "https://github.com/JosePablo24/node_Servidor#readme"
+}
