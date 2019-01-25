@@ -3,14 +3,29 @@ var express = require('express')
 var aplicacion  = express()
 var hex = require('hex-string')
 var hex64 = require('hex64')
+var os = require('os')
 
 const net = require('net')
 const server = require('http').Server(aplicacion)
 const socket = require('socket.io')(server)
 
 
-var HOST = '192.168.43.241';
+//var HOST = '192.168.43.241';
 var PORT = 3000;
+var interface = os.networkInterfaces();
+var ipdinamica 
+for(var k in interface){
+    for(var k2 in interface[k]){
+        var address =  interface[k][k2]
+        if(address.family=='IPv4'){
+            if(!address.internal){
+                ipdinamica = address.address
+                console.log(ipdinamica)
+            }
+                        
+        }
+    }
+}
 
 // server.listen(PORT, function(){
 //     console.log('servidor activo ' + PORT +' : ' + HOST)
@@ -31,5 +46,5 @@ var ser = net.createServer( function(so){
     })
 
     
-ser.listen(PORT,HOST);
+ser.listen(PORT,ipdinamica);
 // console.log('hola node')

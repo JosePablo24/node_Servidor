@@ -3,6 +3,7 @@ var express = require('express')
 var aplicacion  = express()
 var hex = require('hex-string')
 var hex64 = require('hex64')
+var Os = require('os')
 
 const net = require('net')
 const server = require('http').Server(aplicacion)
