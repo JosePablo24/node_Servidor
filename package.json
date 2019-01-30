@@ -16,6 +16,9 @@
     "net": "^1.0.2",
     "socket.io": "^2.2.0"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JosePablo24/node_Servidor.git"
