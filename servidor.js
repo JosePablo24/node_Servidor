@@ -10,7 +10,7 @@ const server = require('http').Server(aplicacion)
 const socket = require('socket.io')(server)
 
 
-var HOST = '192.168.0.22';
+var HOST = '192.168.43.180';
 var PORT = 4000;
 
 // server.listen(PORT, function(){
@@ -22,9 +22,13 @@ var ser = net.createServer( function(so){
     console.log('usuario conectado'+ so.remoteAddress + ' : ' + so.remotePort);        
 
     so.write('hola como estas cliente\r\n');
-    so.pipe(so);
-    
-    
+    so.pipe(so);    
+            
+    // so.on(so, function (so) {
+    //     var cas = so;
+    //     console.log(decoder.write(data));                
+    // });
+
     // so.on('connect', function(){
     //     console.log('usuario conectado'+ so.remoteAddress + ' : ' + so.remotePort);        
     //     })

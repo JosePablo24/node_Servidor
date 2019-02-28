@@ -9,7 +9,10 @@ var net = require('net');
 
 var server = net.createServer(function(socket) {
 	socket.write('hola como estas cliente\r\n');
-	socket.pipe(socket);
+    socket.pipe(socket);
+    console.log(socket);
+    
+    
 });
 
 server.listen(5000, '192.168.0.22');
