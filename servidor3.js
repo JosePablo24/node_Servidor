@@ -1,48 +1,39 @@
-/*
-In the node.js intro tutorial (http://nodejs.org/), they show a basic tcp 
-server, but for some reason omit a client connecting to it.  I added an 
-example at the bottom.
-Save the following server in example.js:
-*/
+const express = require('express')
+var aplicacion = express()
+const os = require('os')
+var interface = os.networkInterfaces()
+const net = require('net')
+const server = require('http').Server(aplicacion)
+const socket = require('socket.io')(server)
+const {StringDecoder} =  require('string_decoder')
+const decoder = new StringDecoder('utf8')
+var ipDimanic;
+for(var k in interface){
+  for(var k2 in interface[k]){
+    var address = interface[k][k2]
+    if(address.family = "IPv4" && !address.internal){
+      ipDimanic = address.address.toString()
+    }
+  }
+}
 
-var net = require('net');
+var HOST = "192.168.0.22"
+var PORT = process.env.PORT || 6000;
 
-var server = net.createServer(function(socket) {
-	socket.write('hola como estas cliente\r\n');
-    socket.pipe(socket);
-    console.log(socket);
-    
-    
-});
+  server.listen(PORT, function(){
+      console.log('servidor activo ' + HOST + ':' + PORT)
+  })
 
-server.listen(5000, '192.168.0.22');
+var ser = net.createServer(function(so){
+    console.log('Usuario Nuevo ' + so.remoteAddress + ':' + so.remotePort)    
+	so.write("que tal cliente ")
+	so.pipe(so)
+    so.on('data', function(data){
+        console.log(" Cliente -> "+ decoder.write(data))
+    })
+    so.on('close', function(){
+      
+    })
+})
 
-/*
-And connect with a tcp client from the command line using netcat, the *nix 
-utility for reading and writing across tcp/udp network connections.  I've only 
-used it for debugging myself.
-$ netcat 127.0.0.1 1337
-You should see:
-> Echo server
-*/
-
-/* Or use this example tcp client written in node.js.  (Originated with 
-example code from 
-http://www.hacksparrow.com/tcp-socket-programming-in-node-js.html.) */
-
-var net = require('net');
-
-var client = new net.Socket();
-client.connect(5000, '192.168.0.22', function() {
-	console.log('Connected');
-	client.write('Hello, server! Love, Client.');
-});
-
-client.on('data', function(data) {
-	console.log('Received: ' + data);
-	client.destroy(); // kill client after server's response
-});
-
-client.on('close', function() {
-	console.log('Connection closed');
-});
+ser.listen(PORT, HOST)

@@ -1,47 +1,39 @@
-//crear servidor
-var express = require('express')
-var aplicacion  = express()
-var hex = require('hex-string')
-var hex64 = require('hex64')
-var Os = require('os')
-
+const express = require('express')
+var aplicacion = express()
+const os = require('os')
+var interface = os.networkInterfaces()
 const net = require('net')
 const server = require('http').Server(aplicacion)
 const socket = require('socket.io')(server)
+const {StringDecoder} =  require('string_decoder')
+const decoder = new StringDecoder('utf8')
+var ipDimanic;
+for(var k in interface){
+  for(var k2 in interface[k]){
+    var address = interface[k][k2]
+    if(address.family = "IPv4" && !address.internal){
+      ipDimanic = address.address.toString()
+    }
+  }
+}
 
+var HOST = "192.168.0.22"
+var PORT = process.env.PORT || 4000;
 
-var HOST = '192.168.43.180';
-var PORT = 4000;
+  server.listen(PORT, function(){
+      console.log('servidor activo ' + HOST + ':' + PORT)
+  })
 
-// server.listen(PORT, function(){
-//     console.log('servidor activo ' + PORT +' : ' + HOST)
-//     })
-
-var ser = net.createServer( function(so){ 
-    // console.log(so);
-    console.log('usuario conectado'+ so.remoteAddress + ' : ' + so.remotePort);        
-
-    so.write('hola como estas cliente\r\n');
-    so.pipe(so);    
-            
-    // so.on(so, function (so) {
-    //     var cas = so;
-    //     console.log(decoder.write(data));                
-    // });
-
-    // so.on('connect', function(){
-    //     console.log('usuario conectado'+ so.remoteAddress + ' : ' + so.remotePort);        
-    //     })
-    
-    // so.on('data', function(data){            
-    //     console.log(data.toString('utf8'));
-        
-    //     })
-    so.on('close', function(){
-        console.log('usuario desconectado');            
-        })
+var ser = net.createServer(function(so){
+    console.log('Usuario Nuevo ' + so.remoteAddress + ':' + so.remotePort)    
+    so.write("que tal cliente ")
+	so.pipe(so)
+    so.on('data', function(data){
+        console.log(" Cliente -> "+ decoder.write(data))
     })
+    so.on('close', function(){
+      
+    })
+})
 
-    
-ser.listen(PORT,HOST);
-// console.log('hola node')
+ser.listen(PORT, HOST)
